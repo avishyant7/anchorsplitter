@@ -1,10 +1,9 @@
 package com.anchorsplitter;
 
-import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.api.ClientCommands;
+import net.fabricmc.api.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
@@ -15,6 +14,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public final class AnchorSplitterClient implements ClientModInitializer {
+    private static final int SPLIT_DELAY_TICKS = 18;
+    private static final int ACTION_DELAY_TICKS = 2;
+
     private boolean enabled;
     private int dedicatedSlot = -1;
     private int sourceSlot = -1;
@@ -157,7 +159,7 @@ public final class AnchorSplitterClient implements ClientModInitializer {
         }
 
         click(client, screenSlot(dedicatedSlot), 0);
-        waitTicks = 1;
+        waitTicks = ACTION_DELAY_TICKS;
         state = State.PLACE_BUFFER;
     }
 
@@ -172,7 +174,7 @@ public final class AnchorSplitterClient implements ClientModInitializer {
         }
 
         click(client, screenSlot(bufferSlot), 0);
-        waitTicks = 1;
+        waitTicks = ACTION_DELAY_TICKS;
         state = State.PICKUP_SOURCE;
     }
 
@@ -190,7 +192,7 @@ public final class AnchorSplitterClient implements ClientModInitializer {
         }
 
         click(client, screenSlot(sourceSlot), 0);
-        waitTicks = 1;
+        waitTicks = ACTION_DELAY_TICKS;
         state = State.PLACE_ONE;
     }
 
@@ -200,7 +202,8 @@ public final class AnchorSplitterClient implements ClientModInitializer {
         }
 
         click(client, screenSlot(dedicatedSlot), 1);
-        waitTicks = 1;
+
+        waitTicks = SPLIT_DELAY_TICKS;
         state = State.RETURN_REMAINDER;
     }
 
@@ -220,7 +223,7 @@ public final class AnchorSplitterClient implements ClientModInitializer {
         }
 
         click(client, screenSlot(sourceSlot), 0);
-        waitTicks = 1;
+        waitTicks = ACTION_DELAY_TICKS;
         sourceSlot = -1;
         state = State.IDLE;
     }
