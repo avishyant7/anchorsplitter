@@ -153,7 +153,7 @@ public final class AnchorSplitterClient implements ClientModInitializer {
         }
 
         click(client, screenSlot(sourceSlot), 0);
-        expectedStateId = inv.menu.stateId;
+        expectedStateId = client.player.containerMenu.getStateId();
         waitTicks = ACTION_TIMEOUT_TICKS;
         state = State.PLACE_ONE;
     }
@@ -164,7 +164,7 @@ public final class AnchorSplitterClient implements ClientModInitializer {
         }
 
         click(client, screenSlot(dedicatedSlot), 1);
-        waitTicks = SPLIT_SETTLE_TICKS;
+        waitTicks = ACTION_TIMEOUT_TICKS;
         state = State.RETURN_REMAINDER;
     }
 
@@ -185,12 +185,12 @@ public final class AnchorSplitterClient implements ClientModInitializer {
 
         click(client, screenSlot(sourceSlot), 0);
         sourceSlot = -1;
-        expectedStateId = client.player.containerMenu.stateId;
+        expectedStateId = client.player.containerMenu.getStateId();
         state = State.IDLE;
     }
 
     private boolean menuStateChanged(AbstractContainerMenu menu) {
-        return expectedStateId >= 0 && menu.stateId != expectedStateId;
+        return expectedStateId >= 0 && menu.getStateId() != expectedStateId;
     }
 
     private static void click(Minecraft client, int slot, int button) {
