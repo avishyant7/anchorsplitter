@@ -2,7 +2,7 @@ package com.anchorsplitter;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
-import net.fabricmc.api.ClientCommands;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
 import net.fabricmc.api.ClientTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
